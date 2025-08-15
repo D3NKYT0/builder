@@ -103,12 +103,12 @@
                     <StackPanel Margin="16,22,0,0" Visibility="Collapsed">
                         <RadioButton Content="Ru" Template="{DynamicResource LangRadio}" Width="27" Height="21" Cursor="Hand" IsChecked="True">
                             <Control.Background>
-                                <ImageBrush ImageSource="/UpdateBuilder/Resource/ru.png" />
+                                <ImageBrush ImageSource="/UpdateBuilder/Resource/checkhash_on.png" />
                             </Control.Background>
                         </RadioButton>
                         <RadioButton Content="Eng" Width="27" Height="21" Margin="0,7" Template="{DynamicResource LangRadio}" Cursor="Hand">
                             <Control.Background>
-                                <ImageBrush ImageSource="/UpdateBuilder/Resource/en.png" />
+                                <ImageBrush ImageSource="/UpdateBuilder/Resource/checkhash_off.png" />
                             </Control.Background>
                         </RadioButton>
                     </StackPanel>

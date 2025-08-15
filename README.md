@@ -15,8 +15,8 @@ A Windows WPF application for building and managing update patches for L2JCore s
 
 ## 📋 Requirements
 
-- **Operating System**: Windows 7/8/10/11
-- **.NET Framework**: 4.5 or higher
+- **Operating System**: Windows 10/11 (Windows 7/8 with .NET 6.0 Runtime)
+- **.NET Runtime**: 6.0 or higher
 - **RAM**: Minimum 512MB (2GB recommended)
 - **Disk Space**: At least 100MB free space
 
@@ -32,10 +32,25 @@ A Windows WPF application for building and managing update patches for L2JCore s
 # Clone the repository
 git clone [repository-url]
 
-# Open the solution in Visual Studio
-# Build the solution (Ctrl+Shift+B)
-# Run the application (F5)
+# Navigate to project directory
+cd UpdateBuilder
+
+# Restore dependencies
+dotnet restore
+
+# Build the project
+dotnet build
+
+# Run the application
+dotnet run
 ```
+
+### Using Visual Studio
+
+1. Open `UpdateBuilder.sln` in Visual Studio 2022
+2. Restore NuGet packages
+3. Build the solution (Ctrl+Shift+B)
+4. Run the application (F5)
 
 ## 📖 Usage
 
@@ -115,7 +130,7 @@ The application saves user preferences including:
 ### Common Issues
 
 **Application won't start**
-- Ensure .NET Framework 4.5+ is installed
+- Ensure .NET 6.0 Runtime is installed
 - Check Windows compatibility settings
 - Verify file permissions
 

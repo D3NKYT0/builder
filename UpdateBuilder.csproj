@@ -1,15 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>L2JCore Builder</AssemblyName>
     <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
     <OutputType>WinExe</OutputType>
     <UseWPF>True</UseWPF>
-    <TargetFramework>net45</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
   </PropertyGroup>
   <PropertyGroup>
-    <LangVersion>Preview</LangVersion>
+    <LangVersion>latest</LangVersion>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <ApplicationIcon>icon.ico</ApplicationIcon>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="icon.ico" />
@@ -18,21 +21,17 @@
     <None Remove="UpdateBuilder\Resource\checkhash_on.png" />
     <None Remove="UpdateBuilder\Resource\critical.png" />
     <None Remove="UpdateBuilder\Resource\critical_off.png" />
-    <None Remove="UpdateBuilder\Resource\en.png" />
     <None Remove="UpdateBuilder\Resource\figura.png" />
-    <None Remove="UpdateBuilder\Resource\frame-201.png" />
-    <None Remove="UpdateBuilder\Resource\frame.png" />
     <None Remove="UpdateBuilder\Resource\loading-wheel-trans.png" />
-    <None Remove="UpdateBuilder\Resource\logo-dark.png" />
     <None Remove="UpdateBuilder\Resource\logoupnova.png" />
     <None Remove="UpdateBuilder\Resource\minfolder.png" />
-    <None Remove="UpdateBuilder\Resource\ru.png" />
     <None Remove="UpdateBuilder\Resource\sync.png" />
     <None Remove="UpdateBuilder\Resource\syncbutton.png" />
     <None Remove="UpdateBuilder\Resource\tsentr.png" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System.Windows.Forms" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+    <PackageReference Include="System.Windows.Forms" Version="4.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icon.ico" />
@@ -41,15 +40,10 @@
     <Resource Include="UpdateBuilder\Resource\checkhash_on.png" />
     <Resource Include="UpdateBuilder\Resource\critical.png" />
     <Resource Include="UpdateBuilder\Resource\critical_off.png" />
-    <Resource Include="UpdateBuilder\Resource\en.png" />
     <Resource Include="UpdateBuilder\Resource\figura.png" />
-    <Resource Include="UpdateBuilder\Resource\frame-201.png" />
-    <Resource Include="UpdateBuilder\Resource\frame.png" />
     <Resource Include="UpdateBuilder\Resource\loading-wheel-trans.png" />
-    <Resource Include="UpdateBuilder\Resource\logo-dark.png" />
     <Resource Include="UpdateBuilder\Resource\logoupnova.png" />
     <Resource Include="UpdateBuilder\Resource\minfolder.png" />
-    <Resource Include="UpdateBuilder\Resource\ru.png" />
     <Resource Include="UpdateBuilder\Resource\sync.png" />
     <Resource Include="UpdateBuilder\Resource\syncbutton.png" />
     <Resource Include="UpdateBuilder\Resource\tsentr.png" />
