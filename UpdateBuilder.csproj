@@ -1,0 +1,70 @@
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <AssemblyName>L2JCore Builder</AssemblyName>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <OutputType>WinExe</OutputType>
+    <UseWPF>True</UseWPF>
+    <TargetFramework>net45</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LangVersion>Preview</LangVersion>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="icon.ico" />
+    <None Remove="UpdateBuilder\Resource\bigfolder.png" />
+    <None Remove="UpdateBuilder\Resource\checkhash_off.png" />
+    <None Remove="UpdateBuilder\Resource\checkhash_on.png" />
+    <None Remove="UpdateBuilder\Resource\critical.png" />
+    <None Remove="UpdateBuilder\Resource\critical_off.png" />
+    <None Remove="UpdateBuilder\Resource\en.png" />
+    <None Remove="UpdateBuilder\Resource\figura.png" />
+    <None Remove="UpdateBuilder\Resource\frame-201.png" />
+    <None Remove="UpdateBuilder\Resource\frame.png" />
+    <None Remove="UpdateBuilder\Resource\loading-wheel-trans.png" />
+    <None Remove="UpdateBuilder\Resource\logo-dark.png" />
+    <None Remove="UpdateBuilder\Resource\logoupnova.png" />
+    <None Remove="UpdateBuilder\Resource\minfolder.png" />
+    <None Remove="UpdateBuilder\Resource\ru.png" />
+    <None Remove="UpdateBuilder\Resource\sync.png" />
+    <None Remove="UpdateBuilder\Resource\syncbutton.png" />
+    <None Remove="UpdateBuilder\Resource\tsentr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon.ico" />
+    <Resource Include="UpdateBuilder\Resource\bigfolder.png" />
+    <Resource Include="UpdateBuilder\Resource\checkhash_off.png" />
+    <Resource Include="UpdateBuilder\Resource\checkhash_on.png" />
+    <Resource Include="UpdateBuilder\Resource\critical.png" />
+    <Resource Include="UpdateBuilder\Resource\critical_off.png" />
+    <Resource Include="UpdateBuilder\Resource\en.png" />
+    <Resource Include="UpdateBuilder\Resource\figura.png" />
+    <Resource Include="UpdateBuilder\Resource\frame-201.png" />
+    <Resource Include="UpdateBuilder\Resource\frame.png" />
+    <Resource Include="UpdateBuilder\Resource\loading-wheel-trans.png" />
+    <Resource Include="UpdateBuilder\Resource\logo-dark.png" />
+    <Resource Include="UpdateBuilder\Resource\logoupnova.png" />
+    <Resource Include="UpdateBuilder\Resource\minfolder.png" />
+    <Resource Include="UpdateBuilder\Resource\ru.png" />
+    <Resource Include="UpdateBuilder\Resource\sync.png" />
+    <Resource Include="UpdateBuilder\Resource\syncbutton.png" />
+    <Resource Include="UpdateBuilder\Resource\tsentr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

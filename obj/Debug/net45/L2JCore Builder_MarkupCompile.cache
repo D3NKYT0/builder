@@ -1,0 +1,20 @@
+﻿L2JCore Builder
+
+
+winexe
+C#
+.cs
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Copiar desse para fazer outros\UpdateBuilder\obj\Debug\net45\
+UpdateBuilder
+none
+false
+TRACE;DEBUG;NETFRAMEWORK;NET45;
+
+7-1004910753
+
+62-862476604
+20-692407678
+UpdateBuilder\App.xaml;UpdateBuilder\Controls\BusyIndicatorTemplate.xaml;UpdateBuilder\Styles\MainStyleDictionary.xaml;UpdateBuilder\Styles\ScrollStyle.xaml;UpdateBuilder\Styles\ToggleButtonStyle.xaml;UpdateBuilder\Styles\TreeViewStyle.xaml;UpdateBuilder\Views\MainWindow.xaml;
+
+False
+

@@ -1,0 +1,46 @@
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Original para edicloes\UpdateBuilder\bin\Debug\net45\UpdateBuilder.exe.config
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Original para edicloes\UpdateBuilder\bin\Debug\net45\UpdateBuilder.exe
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Original para edicloes\UpdateBuilder\bin\Debug\net45\UpdateBuilder.pdb
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Original para edicloes\UpdateBuilder\obj\Debug\net45\UpdateBuilder.csproj.AssemblyReference.cache
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Original para edicloes\UpdateBuilder\obj\Debug\net45\UpdateBuilder\App.g.cs
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Original para edicloes\UpdateBuilder\obj\Debug\net45\UpdateBuilder\Views\MainWindow.g.cs
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Original para edicloes\UpdateBuilder\obj\Debug\net45\GeneratedInternalTypeHelper.g.cs
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Original para edicloes\UpdateBuilder\obj\Debug\net45\UpdateBuilder_MarkupCompile.cache
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Original para edicloes\UpdateBuilder\obj\Debug\net45\UpdateBuilder_MarkupCompile.lref
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Original para edicloes\UpdateBuilder\obj\Debug\net45\UpdateBuilder\App.baml
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Original para edicloes\UpdateBuilder\obj\Debug\net45\UpdateBuilder\Controls\BusyIndicatorTemplate.baml
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Original para edicloes\UpdateBuilder\obj\Debug\net45\UpdateBuilder\Styles\MainStyleDictionary.baml
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Original para edicloes\UpdateBuilder\obj\Debug\net45\UpdateBuilder\Styles\ScrollStyle.baml
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Original para edicloes\UpdateBuilder\obj\Debug\net45\UpdateBuilder\Styles\ToggleButtonStyle.baml
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Original para edicloes\UpdateBuilder\obj\Debug\net45\UpdateBuilder\Styles\TreeViewStyle.baml
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Original para edicloes\UpdateBuilder\obj\Debug\net45\UpdateBuilder\Views\MainWindow.baml
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Original para edicloes\UpdateBuilder\obj\Debug\net45\UpdateBuilder.g.resources
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Original para edicloes\UpdateBuilder\obj\Debug\net45\UpdateBuilder.Properties.Resources.resources
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Original para edicloes\UpdateBuilder\obj\Debug\net45\UpdateBuilder.csproj.GenerateResource.cache
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Original para edicloes\UpdateBuilder\obj\Debug\net45\UpdateBuilder.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Original para edicloes\UpdateBuilder\obj\Debug\net45\UpdateBuilder.csproj.CoreCompileInputs.cache
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Original para edicloes\UpdateBuilder\obj\Debug\net45\UpdateBuilder.exe
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Original para edicloes\UpdateBuilder\obj\Debug\net45\UpdateBuilder.pdb
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Copiar desse para fazer outros\UpdateBuilder\bin\Debug\net45\L2JCore Builder.exe.config
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Copiar desse para fazer outros\UpdateBuilder\bin\Debug\net45\L2JCore Builder.exe
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Copiar desse para fazer outros\UpdateBuilder\bin\Debug\net45\L2JCore Builder.pdb
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Copiar desse para fazer outros\UpdateBuilder\obj\Debug\net45\UpdateBuilder.csproj.AssemblyReference.cache
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Copiar desse para fazer outros\UpdateBuilder\obj\Debug\net45\UpdateBuilder\App.g.cs
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Copiar desse para fazer outros\UpdateBuilder\obj\Debug\net45\UpdateBuilder\Views\MainWindow.g.cs
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Copiar desse para fazer outros\UpdateBuilder\obj\Debug\net45\GeneratedInternalTypeHelper.g.cs
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Copiar desse para fazer outros\UpdateBuilder\obj\Debug\net45\L2JCore Builder_MarkupCompile.cache
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Copiar desse para fazer outros\UpdateBuilder\obj\Debug\net45\L2JCore Builder_MarkupCompile.lref
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Copiar desse para fazer outros\UpdateBuilder\obj\Debug\net45\UpdateBuilder\App.baml
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Copiar desse para fazer outros\UpdateBuilder\obj\Debug\net45\UpdateBuilder\Controls\BusyIndicatorTemplate.baml
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Copiar desse para fazer outros\UpdateBuilder\obj\Debug\net45\UpdateBuilder\Styles\MainStyleDictionary.baml
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Copiar desse para fazer outros\UpdateBuilder\obj\Debug\net45\UpdateBuilder\Styles\ScrollStyle.baml
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Copiar desse para fazer outros\UpdateBuilder\obj\Debug\net45\UpdateBuilder\Styles\ToggleButtonStyle.baml
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Copiar desse para fazer outros\UpdateBuilder\obj\Debug\net45\UpdateBuilder\Styles\TreeViewStyle.baml
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Copiar desse para fazer outros\UpdateBuilder\obj\Debug\net45\UpdateBuilder\Views\MainWindow.baml
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Copiar desse para fazer outros\UpdateBuilder\obj\Debug\net45\L2JCore Builder.g.resources
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Copiar desse para fazer outros\UpdateBuilder\obj\Debug\net45\UpdateBuilder.Properties.Resources.resources
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Copiar desse para fazer outros\UpdateBuilder\obj\Debug\net45\UpdateBuilder.csproj.GenerateResource.cache
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Copiar desse para fazer outros\UpdateBuilder\obj\Debug\net45\UpdateBuilder.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Copiar desse para fazer outros\UpdateBuilder\obj\Debug\net45\UpdateBuilder.csproj.CoreCompileInputs.cache
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Copiar desse para fazer outros\UpdateBuilder\obj\Debug\net45\L2JCore Builder.exe
+C:\Users\Maik\Desktop\[mmo-dev.info]_L2Updater\Copiar desse para fazer outros\UpdateBuilder\obj\Debug\net45\L2JCore Builder.pdb
