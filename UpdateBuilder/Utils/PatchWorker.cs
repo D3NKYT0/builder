@@ -24,21 +24,21 @@ namespace UpdateBuilder.Utils
 			{
 				try
 				{
-					Logger.Instance.Add("Проверяем корневую папку");
+					Logger.Instance.Add("Verificando pasta raiz");
 					if (!Directory.Exists(path))
 					{
-						Logger.Instance.Add("Папка отсутствует");
+						Logger.Instance.Add("Pasta não encontrada");
 						return null;
 					}
-					Logger.Instance.Add("Все на месте, начинаем поиск файлов и папок");
+					Logger.Instance.Add("Pasta encontrada, iniciando busca de arquivos e pastas");
 					DirectoryInfo rootDir = new DirectoryInfo(path);
 					FolderModel treeRecurse = GetTreeRecurse(rootDir, token);
-					Logger.Instance.Add("Все успешно загружено");
+					Logger.Instance.Add("Todos os arquivos carregados com sucesso");
 					return treeRecurse;
 				}
 				catch (Exception ex)
 				{
-					Logger.Instance.Add("Произошла ошибка во время чтения файлов [" + ex.Message + "]");
+					Logger.Instance.Add("Erro durante a leitura dos arquivos [" + ex.Message + "]");
 					return null;
 				}
 			});
@@ -47,19 +47,19 @@ namespace UpdateBuilder.Utils
 		private FolderModel GetTreeRecurse(DirectoryInfo rootDir, CancellationToken token, string path = "")
 		{
 			token.ThrowIfCancellationRequested();
-			Logger.Instance.Add($"Погружаемся в {rootDir}");
+			Logger.Instance.Add($"Explorando pasta: {rootDir.Name}");
 			FolderModel folderModel = new FolderModel
 			{
 				Name = rootDir.Name,
 				Path = Path.Combine(path, rootDir.Name)
 			};
-			Logger.Instance.Add("Проверяем исть ли подпапки");
+			Logger.Instance.Add("Verificando subpastas");
 			foreach (DirectoryInfo item in rootDir.EnumerateDirectories())
 			{
 				folderModel.Folders.Add(GetTreeRecurse(item, token, folderModel.Path));
-				Logger.Instance.Add($"Добавили {item} в {folderModel.Name}");
+				Logger.Instance.Add($"Adicionada pasta: {item.Name} em {folderModel.Name}");
 			}
-			Logger.Instance.Add("Проверяем исть ли файлы");
+			Logger.Instance.Add("Verificando arquivos");
 			foreach (FileInfo item2 in rootDir.EnumerateFiles())
 			{
 				token.ThrowIfCancellationRequested();
@@ -72,9 +72,9 @@ namespace UpdateBuilder.Utils
 					FullPath = item2.FullName,
 					Path = folderModel.Path
 				});
-				Logger.Instance.Add($"Добавили {item2} в {folderModel.Name}");
+				Logger.Instance.Add($"Adicionado arquivo: {item2.Name} em {folderModel.Name}");
 			}
-			Logger.Instance.Add($"Поднимаемся из {rootDir}");
+			Logger.Instance.Add($"Saindo da pasta: {rootDir.Name}");
 			return folderModel;
 		}
 
@@ -85,25 +85,78 @@ namespace UpdateBuilder.Utils
 				try
 				{
 					token.ThrowIfCancellationRequested();
-					Logger.Instance.Add("Создаем патч лист");
+					
+					// Criar arquivo de log detalhado
+					string logFilePath = Path.Combine(outPath, $"patch_log_{DateTime.Now:yyyyMMdd_HHmmss}.txt");
+					Logger.Instance.Add($"Criando arquivo de log detalhado: {logFilePath}");
+					
+					Logger.Instance.Add("Criando lista de patch");
+					Logger.Instance.Add($"Caminho de saída: {outPath}");
+					Logger.Instance.Add($"Pasta raiz: {updateInfoAll.Folder.Name}");
+					
+					// Verificar se o diretório de saída existe
+					if (!Directory.Exists(outPath))
+					{
+						Logger.Instance.Add($"Criando diretório de saída: {outPath}");
+						Directory.CreateDirectory(outPath);
+					}
+					
+					// Teste simples de compactação
+					Logger.Instance.Add("Testando biblioteca ZIP...");
+					try
+					{
+						string testFile = Path.Combine(outPath, "test.txt");
+						File.WriteAllText(testFile, "Teste de compactação");
+						
+						string testZip = Path.Combine(outPath, "test.zip");
+						using (ZipFile zipFile = new ZipFile())
+						{
+							zipFile.CompressionLevel = CompressionLevel.BestCompression;
+							zipFile.AddFile(testFile, "");
+							zipFile.Save(testZip);
+						}
+						
+						if (File.Exists(testZip))
+						{
+							Logger.Instance.Add("✓ Teste de compactação bem-sucedido");
+							File.Delete(testFile);
+							File.Delete(testZip);
+						}
+						else
+						{
+							Logger.Instance.Add("✗ Teste de compactação falhou");
+						}
+					}
+					catch (Exception testEx)
+					{
+						Logger.Instance.Add($"✗ Erro no teste de compactação: {testEx.Message}");
+					}
+					
 					BuildUpdateInfo(updateInfo, outPath);
-					Logger.Instance.Add("Патч лист создан");
-					Logger.Instance.Add("Начинаем паковать");
-					PuckingRecurse(updateInfoAll.Folder, outPath + "\\" + updateInfoAll.Folder.Name, token); //тут очен долго ...
-					Logger.Instance.Add("Все запаковано");
+					Logger.Instance.Add("Lista de patch criada");
+					Logger.Instance.Add("Iniciando compactação");
+					
+					string targetPath = outPath + "\\" + updateInfoAll.Folder.Name;
+					Logger.Instance.Add($"Caminho de destino para compactação: {targetPath}");
+					
+					PuckingRecurse(updateInfoAll.Folder, targetPath, token, logFilePath);
+					Logger.Instance.Add("Compactação concluída");
 					return true;
 				}
 				catch (Exception ex)
 				{
-					Logger.Instance.Add("Произошла ошибка во время создания апдейта [" + ex.Message + "]");
+					Logger.Instance.Add("Erro durante a criação do update [" + ex.Message + "]");
+					Logger.Instance.Add("Stack trace: " + ex.StackTrace);
 					return false;
 				}
 			});
 		}
 
-		private void PuckingRecurse(FolderModel rootFolder, string outPath, CancellationToken token)
+		private void PuckingRecurse(FolderModel rootFolder, string outPath, CancellationToken token, string logFilePath)
 		{
 			token.ThrowIfCancellationRequested();
+			Logger.Instance.Add($"Processando pasta: {rootFolder.Name} em {outPath}");
+			
 			foreach (FolderModel folder in rootFolder.Folders)
 			{
 				string text = Path.Combine(outPath, folder.Name);
@@ -115,48 +168,85 @@ namespace UpdateBuilder.Utils
 				{
 					Directory.CreateDirectory(text);
 				}
-				PuckingRecurse(folder, text, token);
+				PuckingRecurse(folder, text, token, logFilePath);
 			}
-			foreach (FileModel item in rootFolder.Files.Where((FileModel c) => c.ModifyType == ModifyType.Deleted))
+			
+			// Contar arquivos por tipo
+			var deletedFiles = rootFolder.Files.Where((FileModel c) => c.ModifyType == ModifyType.Deleted).ToList();
+			var notModifiedFiles = rootFolder.Files.Where((FileModel c) => c.ModifyType == ModifyType.NotModified).ToList();
+			var modifiedFiles = rootFolder.Files.Where((FileModel c) => c.ModifyType == ModifyType.Modified || c.ModifyType == ModifyType.New).ToList();
+			
+			// Se não há arquivos modificados mas é a primeira execução (todos são NotModified), 
+			// vamos criar um patch inicial com todos os arquivos
+			if (modifiedFiles.Count == 0 && notModifiedFiles.Count > 0)
+			{
+				Logger.Instance.Add("Primeira execução detectada - criando patch inicial com todos os arquivos");
+				WriteDetailedLog(logFilePath, "=== PRIMEIRA EXECUÇÃO - CRIANDO PATCH INICIAL ===");
+				modifiedFiles = notModifiedFiles.ToList();
+				notModifiedFiles.Clear();
+			}
+			
+			Logger.Instance.Add($"Arquivos na pasta {rootFolder.Name}: Deletados={deletedFiles.Count}, Não modificados={notModifiedFiles.Count}, Modificados/Novos={modifiedFiles.Count}");
+			WriteDetailedLog(logFilePath, $"=== PROCESSANDO PASTA: {rootFolder.Name} ===");
+			WriteDetailedLog(logFilePath, $"Total de arquivos: {rootFolder.Files.Count}");
+			WriteDetailedLog(logFilePath, $"Arquivos deletados: {deletedFiles.Count}");
+			WriteDetailedLog(logFilePath, $"Arquivos não modificados: {notModifiedFiles.Count}");
+			WriteDetailedLog(logFilePath, $"Arquivos modificados/novos: {modifiedFiles.Count}");
+			WriteDetailedLog(logFilePath, "");
+			
+			foreach (FileModel item in deletedFiles)
 			{
 				string text2 = Path.Combine(outPath, item.Name + ".zip");
-				Logger.Instance.Add("Удаляем " + text2);
+				Logger.Instance.Add($"Removendo arquivo: {text2} | Hash: {item.Hash} | Tamanho: {item.Size} bytes | Tipo: {item.ModifyType}");
+				WriteDetailedLog(logFilePath, $"DELETADO: {item.Name} | Caminho: {item.FullPath} | Hash: {item.Hash} | Tamanho: {item.Size} bytes | Tipo: {item.ModifyType}");
 				if (File.Exists(text2))
 				{
 					File.Delete(text2);
 				}
 			}
-			foreach (FileModel item2 in rootFolder.Files.Where((FileModel c) => c.ModifyType == ModifyType.NotModified))
+			foreach (FileModel item2 in notModifiedFiles)
 			{
-				Logger.Instance.Add("Ничего не делаем с " + item2.FullPath);
+				Logger.Instance.Add($"Arquivo não modificado: {item2.FullPath} | Hash: {item2.Hash} | Tamanho: {item2.Size} bytes | Tipo: {item2.ModifyType}");
+				WriteDetailedLog(logFilePath, $"NÃO MODIFICADO: {item2.Name} | Caminho: {item2.FullPath} | Hash: {item2.Hash} | Tamanho: {item2.Size} bytes | Tipo: {item2.ModifyType}");
 			}
-			foreach (FileModel item3 in rootFolder.Files.Where((FileModel c) => c.ModifyType == ModifyType.Modified || c.ModifyType == ModifyType.New))
+			foreach (FileModel item3 in modifiedFiles)
 			{
 				try
 				{
 					string str = Path.Combine(outPath, item3.Name);
-					Logger.Instance.Add("Проверяем " + item3.FullPath);
+					Logger.Instance.Add($"Verificando arquivo: {item3.FullPath} | Hash: {item3.Hash} | Tamanho: {item3.Size} bytes | Tipo: {item3.ModifyType}");
+					WriteDetailedLog(logFilePath, $"MODIFICADO/NOVO: {item3.Name} | Caminho: {item3.FullPath} | Hash: {item3.Hash} | Tamanho: {item3.Size} bytes | Tipo: {item3.ModifyType}");
 					if (!File.Exists(item3.FullPath))
 					{
-						throw new Exception("Файл отсутствует");
+						throw new Exception("Arquivo não encontrado");
 					}
-					Logger.Instance.Add(item3.FullPath + " на месте");
-					Logger.Instance.Add("Пакуем " + item3.Name);
-					using (ZipFile zipFile = new ZipFile
+					Logger.Instance.Add($"Arquivo encontrado: {item3.FullPath}");
+					Logger.Instance.Add($"Compactando arquivo: {item3.Name}");
+					
+					// Verificar se o diretório de saída existe
+					string outputDir = Path.GetDirectoryName(str);
+					if (!Directory.Exists(outputDir))
 					{
-						//CompressionLevel = CompressionLevel.BestCompression
-						CompressionLevel = CompressionLevel.BestCompression
-					})
+						Logger.Instance.Add($"Criando diretório: {outputDir}");
+						Directory.CreateDirectory(outputDir);
+					}
+					
+					using (ZipFile zipFile = new ZipFile())
 					{
-						zipFile.ProvisionalAlternateEncoding = Encoding.UTF8;
+						zipFile.CompressionLevel = CompressionLevel.BestCompression;
 						zipFile.AddFile(item3.FullPath, "");
+						Logger.Instance.Add($"Salvando arquivo ZIP: {str}.zip");
 						zipFile.Save(str + ".zip");
 					}
-					Logger.Instance.Add("Запаковано " + item3.Name);
+					Logger.Instance.Add("Arquivo compactado: " + item3.Name);
+					WriteDetailedLog(logFilePath, $"✓ COMPACTADO COM SUCESSO: {item3.Name} -> {str}.zip");
 				}
 				catch (Exception ex)
 				{
-					Logger.Instance.Add("Не удалось запаковать " + item3.Name + ", причина [" + ex.Message + "]");
+					Logger.Instance.Add("Falha ao compactar " + item3.Name + ", motivo: [" + ex.Message + "]");
+					Logger.Instance.Add("Stack trace: " + ex.StackTrace);
+					WriteDetailedLog(logFilePath, $"✗ ERRO AO COMPACTAR: {item3.Name} | Erro: {ex.Message}");
+					WriteDetailedLog(logFilePath, $"Stack trace: {ex.StackTrace}");
 				}
 				OnProgressChanged();
 			}
@@ -184,13 +274,13 @@ namespace UpdateBuilder.Utils
 			return await Task.Run(delegate
 			{
 				UpdateInfoModel updateInfoModel = DeserializeUpdateInfo(patchInfoPath);
-				Logger.Instance.Add("Данные о прошлом патче получены");
+				Logger.Instance.Add("Dados do patch anterior obtidos");
 				FolderModel folderModel = SyncFolder(updateInfoModel.Folder, mainFolder, token);
 				if (folderModel == null)
 				{
 					return mainFolder;
 				}
-				Logger.Instance.Add("Патч синхронизирован");
+				Logger.Instance.Add("Patch sincronizado");
 				return folderModel;
 			}, token);
 		}
@@ -205,21 +295,21 @@ namespace UpdateBuilder.Utils
 					ModifyType = mainFolder.ModifyType,
 					Path = mainFolder.Path
 				};
-				Logger.Instance.Add("Синхронизация собранного ранее патча с новым...");
+				Logger.Instance.Add("Sincronização do patch anterior com o novo...");
 				SyncFolderRecurse(patchInfoFolder, mainFolder, folderModel, reverse: false);
 				token.ThrowIfCancellationRequested();
-				Logger.Instance.Add("Синхронизировано");
-				Logger.Instance.Add("Синхронизация нового патча с собраным ранее...");
+				Logger.Instance.Add("Sincronizado");
+				Logger.Instance.Add("Sincronização do novo patch com o anterior...");
 				SyncFolderRecurse(mainFolder, patchInfoFolder, folderModel, reverse: true);
 				token.ThrowIfCancellationRequested();
-				Logger.Instance.Add("Синхронизировано");
+				Logger.Instance.Add("Sincronizado");
 				SyncFiles(patchInfoFolder, mainFolder, folderModel, reverse: false);
 				token.ThrowIfCancellationRequested();
 				SyncFiles(mainFolder, patchInfoFolder, folderModel, reverse: true);
 				token.ThrowIfCancellationRequested();
 				return folderModel;
 			}
-			Logger.Instance.Add("Папки для синхронизации не совпадают");
+			Logger.Instance.Add("Pastas para sincronização não coincidem");
 			return null;
 		}
 
@@ -227,28 +317,28 @@ namespace UpdateBuilder.Utils
 		{
 			foreach (FolderModel masterFolder in masterFolders.Folders)
 			{
-				Logger.Instance.Add("Синхронизация папки " + masterFolder.Name);
+				Logger.Instance.Add("Sincronização de pasta " + masterFolder.Name);
 				if (slaveFolders != null)
 				{
-					Logger.Instance.Add("Поиск зависимой папки " + masterFolder.Name);
+					Logger.Instance.Add("Procurando pasta dependente " + masterFolder.Name);
 					FolderModel folderModel = slaveFolders.Folders.FirstOrDefault((FolderModel c) => c.Name.Equals(masterFolder.Name));
 					FolderModel folderModel2 = syncFolderModel.Folders.FirstOrDefault((FolderModel c) => c.Name.Equals(masterFolder.Name));
 					if (folderModel2 == null)
 					{
-						Logger.Instance.Add("Создаем папку синхронизации " + masterFolder.Name);
+						Logger.Instance.Add("Criando pasta de sincronização " + masterFolder.Name);
 						folderModel2 = CreateSyncFolder(masterFolder, folderModel);
 						syncFolderModel.Folders.Add(folderModel2);
 					}
 					else
 					{
-						Logger.Instance.Add("Папка синхронизации присутствует " + masterFolder.Name);
+						Logger.Instance.Add("Pasta de sincronização presente " + masterFolder.Name);
 					}
-					Logger.Instance.Add("Синхронизации файлов для " + masterFolder.Name);
+					Logger.Instance.Add("Sincronização de arquivos para " + masterFolder.Name);
 					SyncFiles(masterFolder, folderModel, folderModel2, reverse);
 					SyncFolderRecurse(masterFolder, folderModel, folderModel2, reverse);
 					continue;
 				}
-				Logger.Instance.Add("Зависимой папки нет " + masterFolder.Name);
+				Logger.Instance.Add("Pasta dependente não encontrada " + masterFolder.Name);
 				FolderModel folderModel3 = syncFolderModel.Folders.FirstOrDefault((FolderModel c) => c.Name.Equals(masterFolder.Name));
 				if (folderModel3 == null)
 				{
@@ -263,7 +353,7 @@ namespace UpdateBuilder.Utils
 				foreach (FileModel file in masterFolder.Files)
 				{
 					ModifyType modifyType = (!reverse) ? ModifyType.Deleted : ModifyType.New;
-					Logger.Instance.Add($"Устанавливаем тип {modifyType} для {file.Name}");
+					Logger.Instance.Add($"Definindo tipo {modifyType} para {file.Name}");
 					folderModel3.Files.Add(new FileModel
 					{
 						Name = file.Name,
@@ -281,18 +371,18 @@ namespace UpdateBuilder.Utils
 		{
 			foreach (FileModel masterFile in masterFolder.Files)
 			{
-				Logger.Instance.Add("Синхронизируем файл " + masterFile.Name);
+				Logger.Instance.Add("Sincronizando arquivo " + masterFile.Name);
 				FileModel slaveFile = sameSlaveFolder?.Files.FirstOrDefault((FileModel c) => c.Name.Equals(masterFile.Name));
 				FileModel fileModel = syncFolder.Files.FirstOrDefault((FileModel c) => c.Name.Equals(masterFile.Name));
 				if (fileModel == null)
 				{
 					FileModel item = CreateSyncFile(masterFile, slaveFile, reverse);
 					syncFolder.Files.Add(item);
-					Logger.Instance.Add("Создаем файл синхронизации " + masterFile.Name);
+					Logger.Instance.Add("Criando arquivo de sincronização " + masterFile.Name);
 				}
 				else
 				{
-					Logger.Instance.Add("Файл синхронизации присутствует " + masterFile.Name);
+					Logger.Instance.Add("Arquivo de sincronização presente " + masterFile.Name);
 				}
 			}
 		}
@@ -301,7 +391,7 @@ namespace UpdateBuilder.Utils
 		{
 			if (slaveFolder != null)
 			{
-				Logger.Instance.Add("Зависимая папка найдена " + masterFolder.Name);
+				Logger.Instance.Add("Pasta dependente encontrada " + masterFolder.Name);
 				return new FolderModel
 				{
 					Name = slaveFolder.Name,
@@ -309,7 +399,7 @@ namespace UpdateBuilder.Utils
 					Path = slaveFolder.Path
 				};
 			}
-			Logger.Instance.Add("Зависимой папки нет " + masterFolder.Name);
+			Logger.Instance.Add("Pasta dependente não encontrada " + masterFolder.Name);
 			return new FolderModel
 			{
 				Name = masterFolder.Name,
@@ -322,7 +412,7 @@ namespace UpdateBuilder.Utils
 		{
 			if (slaveFile != null)
 			{
-				Logger.Instance.Add("Зависимый файл найден " + slaveFile.Name);
+				Logger.Instance.Add("Arquivo dependente encontrado " + slaveFile.Name);
 				FileModel fileModel = new FileModel
 				{
 					Name = slaveFile.Name,
@@ -343,9 +433,9 @@ namespace UpdateBuilder.Utils
 				}
 				return fileModel;
 			}
-			Logger.Instance.Add("Зависимого файла нет " + masterFile.Name);
+			Logger.Instance.Add("Arquivo dependente não encontrado " + masterFile.Name);
 			ModifyType modifyType = (!reverse) ? ModifyType.Deleted : ModifyType.New;
-			Logger.Instance.Add($"Устанавливаем тип {modifyType} для {masterFile.Name}");
+			Logger.Instance.Add($"Definindo tipo {modifyType} para {masterFile.Name}");
 			return new FileModel
 			{
 				Name = masterFile.Name,
@@ -364,6 +454,20 @@ namespace UpdateBuilder.Utils
 			XmlSerializer xmlSerializer = new XmlSerializer(typeof(UpdateInfoModel));
 			using StreamReader textReader = new StreamReader(File.OpenRead(patchInfoPath));
 			return (UpdateInfoModel)xmlSerializer.Deserialize(textReader);
+		}
+
+		private void WriteDetailedLog(string logFilePath, string message)
+		{
+			try
+			{
+				string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+				string logEntry = $"[{timestamp}] {message}";
+				File.AppendAllText(logFilePath, logEntry + Environment.NewLine);
+			}
+			catch (Exception ex)
+			{
+				Logger.Instance.Add($"Erro ao escrever log detalhado: {ex.Message}");
+			}
 		}
 	}
 }

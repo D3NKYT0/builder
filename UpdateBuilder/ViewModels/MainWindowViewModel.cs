@@ -267,7 +267,7 @@ namespace UpdateBuilder.ViewModels
 			CancellationToken token = _cts.Token;
 			try
 			{
-				Logger.Instance.Add("Начинаем синхронизацию...");
+				Logger.Instance.Add("Iniciando sincronização...");
 				string patchInfoPath = Path.Combine(OutPath, "UpdateInfo.xml");
 				if (File.Exists(patchInfoPath))
 				{
@@ -275,15 +275,15 @@ namespace UpdateBuilder.ViewModels
 				}
 				else
 				{
-					Logger.Instance.Add("Файлов предыдущего патча не найдено");
+					Logger.Instance.Add("Arquivos do patch anterior não encontrados");
 				}
 			}
 			catch (Exception e)
 			{
-				Logger.Instance.Add("Во время синхронизации произошла ошибка");
+				Logger.Instance.Add("Erro durante a sincronização");
 				Logger.Instance.Add(e.Message);
 			}
-			Logger.Instance.Add("Конец синхронизации");
+			Logger.Instance.Add("Sincronização concluída");
 			base.IsBusy = false;
 			_cts = null;
 			CommandManager.InvalidateRequerySuggested();
@@ -323,14 +323,14 @@ namespace UpdateBuilder.ViewModels
 				if (!token.IsCancellationRequested && result)
 				{
 					Logger.Instance.Add("--------------------------------------------");
-					Logger.Instance.Add("--------------ПАТЧ-ГОТОВ!------------");
+					Logger.Instance.Add("--------------PATCH PRONTO!------------");
 					Logger.Instance.Add("--------------------------------------------");
 					Process.Start("explorer", OutPath);
 				}
 			}
 			else
 			{
-				Logger.Instance.Add("КОРНЕВОЙ ПАПКИ НЕТ!");
+				Logger.Instance.Add("PASTA RAIZ NÃO ENCONTRADA!");
 			}
 			ProgressValue = TotalCount;
 			InBuilding = false;

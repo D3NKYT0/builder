@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using System.Windows;
 using System.Windows.Threading;
 using UpdateBuilder.ViewModels;
@@ -11,6 +12,9 @@ namespace UpdateBuilder
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            
+            // Registrar o CodePagesEncodingProvider para suportar IBM437 e outros encodings
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             
             Dispatcher.UnhandledException += DispatcherOnUnhandledException;
             
