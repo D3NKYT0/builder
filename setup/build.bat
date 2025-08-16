@@ -8,13 +8,13 @@ echo.
 :: Navegar para o diretório do projeto
 cd /d "%~dp0.."
 
-:: Verificar se o .NET 6.0 SDK está instalado
-echo [1/5] Verificando .NET 6.0 SDK...
+:: Verificar se o .NET 9.0 SDK está instalado
+echo [1/5] Verificando .NET 9.0 SDK...
 dotnet --version >nul 2>&1
 if %errorlevel% neq 0 (
     echo ERRO: .NET SDK não encontrado!
-    echo Por favor, instale o .NET 6.0 SDK
-    echo Download: https://dotnet.microsoft.com/download/dotnet/6.0
+    echo Por favor, instale o .NET 9.0 SDK
+    echo Download: https://dotnet.microsoft.com/download/dotnet/9.0
     pause
     exit /b 1
 )
@@ -55,12 +55,22 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 echo Compilação concluída com sucesso!
+
+:: Publicar como arquivo único
+echo [4.5/5] Gerando arquivo único...
+dotnet publish --configuration Release --no-restore
+if %errorlevel% neq 0 (
+    echo ERRO: Falha na geração do arquivo único!
+    pause
+    exit /b 1
+)
+echo Arquivo único gerado com sucesso!
 echo.
 
 :: Verificar se o executável foi criado
 echo [5/5] Verificando arquivo executável...
-if exist "bin\Release\net6.0-windows\L2JCore Builder.exe" (
-    echo Executável criado: bin\Release\net6.0-windows\L2JCore Builder.exe
+if exist "bin\Release\net9.0-windows\win-x64\publish\L2JCore Builder.exe" (
+    echo Executável único criado: bin\Release\net9.0-windows\win-x64\publish\L2JCore Builder.exe
     echo.
     echo ========================================
     echo    BUILD CONCLUÍDO COM SUCESSO!
@@ -71,7 +81,7 @@ if exist "bin\Release\net6.0-windows\L2JCore Builder.exe" (
     set /p RUN_APP="Deseja executar o aplicativo agora? (S/N): "
     if /i "%RUN_APP%"=="S" (
         echo Executando UpdateBuilder...
-        start "" "bin\Release\net6.0-windows\L2JCore Builder.exe"
+        start "" "bin\Release\net9.0-windows\win-x64\publish\L2JCore Builder.exe"
     )
 ) else (
     echo ERRO: Executável não encontrado!
